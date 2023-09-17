@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Script that changes the name of a State object to the database
+Script that deletes all State objects with a name containing
+the letter a from the database
 Using module SQLAlchemy
 """
 import sys
@@ -15,6 +16,7 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    state = session.query(State).filter_by(id=2).first()
-    state.name = "New Mexico"
+    for state in session.query(State):
+        if "a" in state.name:
+            session.delete(state)
     session.commit()
